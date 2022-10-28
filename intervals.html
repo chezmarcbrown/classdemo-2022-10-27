@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Intervals</title>
+        <script>
+            if (!localStorage.getItem('counter'))
+                localStorage.setItem('counter', 0);
+            
+            function count() {
+                let c = localStorage.getItem('counter');
+                c++;
+                localStorage.setItem('counter', c);
+                document.querySelector('#count').innerHTML = c;
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('#count').innerHTML = localStorage.getItem('counter');
+                setInterval(count, 500);
+                document.querySelector('button').onclick = count;
+            })
+            
+        </script>
+    </head>
+    <body>
+        <h1 id='count'></h1>
+        <button>Click here</button>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+
+1) in urls.py:
+
+    path("api/status", views.api_status, name="api-status"),
+
+2) in views.py (assumes fields on Listing are: creator, active)
+
+from django.http import JsonResponse
+def api_status(request):
+    if request.user.is_authenticated:
+        my_count = Listing.objects.filter(creator=request.user).count()
+    else:
+        my_count = 0
+
+    status = {
+        'my_listings': my_count,
+        'total_listings': Listing.objects.all().count(),
+        'active_listings': Listing.objects.filter(active=True).count()
+    }
+    print(f'api_status called. user is: {request.user}. values: {status}')
+    return JsonResponse(status)
+
+3) Add javascript
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    update_stats();
+    setInterval(update_stats, 2000);
+});
+
+function update_stats() {
+    fetch("/api/status")
+    .then(response => response.json())
+    .then(data => {
+        document.querySelector('#ml').innerHTML = data['my_listings']
+        document.querySelector('#al').innerHTML = data['active_listings']
+    })
+    .catch(error => {
+        console.log('**Error**', error);
+    });
+}
+</script>
+
+4) Add in html:
+<span id="al">0</span>
+<span id="ml">0</span>
+
+
+5) can also put javascript in a file and add it:
+
+        <script src="{% static 'auctions/auctions.js' %}"></script>
+

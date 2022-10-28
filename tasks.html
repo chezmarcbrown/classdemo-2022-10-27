@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Tasls</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // submit button is initially disabled
+                document.querySelector('#submit').disabled = true;
+            
+                // on each keystroke, enbale sumbit button iff there's content
+                document.querySelector('#task').onkeyup = () => {
+                    if (document.querySelector('#task').value.length > 0) {
+                        document.querySelector('#submit').disabled = false;
+                    } else {
+                        document.querySelector('#submit').disabled = true;
+                    }
+                }
+
+                document.querySelector('form').onsubmit = () => {
+                    //get value of task
+                    let task = document.querySelector('#task').value;
+                    
+                    // create li item
+                    const li = document.createElement('li');
+                    li.innerHTML = task;
+
+                    // add to task list, clear out typein field, disable button
+                    document.querySelector('#tasks').append(li);
+                    document.querySelector('#task').value = '';
+                    document.querySelector('#submit').disabled = true;
+
+                    // stop from submitting this form to ser
+                    return false;
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Tasks</h1>
+        <ul id="tasks">
+        </ul>
+        <form>
+            <input id="task" placeholder="New Task" required type="text">
+            <input id="submit" type="submit">
+        </form>
+    </body>
+</html>

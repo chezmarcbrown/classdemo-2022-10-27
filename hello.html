@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Hello</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelector('form').onsubmit = () => {
+                    const n = document.querySelector('#name_zone').value;
+                    alert(`Hello, ${n}`);
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <h1>Hello!</h1>
+        <form>
+            <input id="name_zone" type="text" placeholder="Name">
+            <input type="submit">
+        </form>
+    </body>
+</html>
